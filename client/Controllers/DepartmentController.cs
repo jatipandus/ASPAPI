@@ -71,12 +71,12 @@ namespace client.Controllers
                 var dept = data.FirstOrDefault(s => s.Id == Id);
                 var json = JsonConvert.SerializeObject(dept, Formatting.None, new JsonSerializerSettings()
                 {
-                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore                
+                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 });
                 return new JsonResult { Data = json, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             return Json("Internal Server Error");
-        } 
+        }
 
         public JsonResult Delete(int Id)
         {

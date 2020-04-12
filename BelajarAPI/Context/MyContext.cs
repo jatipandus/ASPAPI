@@ -11,5 +11,6 @@ namespace BelajarAPI.Context
     {
         public MyContext() : base("BelajarAPI") { }
         public DbSet<DepartmentModels> Departments { get; set; }
+        public DbSet<DivisiModels> Divisis { get; set; }
     }
 }

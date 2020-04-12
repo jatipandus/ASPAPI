@@ -1,83 +1,55 @@
-﻿//$(document).ready(function () {
-//    $('#Department').dataTable({
-//        "ajax": loadDepartment(),
-//        "responsive": true,
-//    });
-//    $('[data-toggle="tooltip"]').tooltip();
-//});
-
-$(document).ready(function () {
-    $('#Edit').hide();
-    loadDepartment();
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-});
-function loadDepartment() {
-    $.ajax({
-        url: "/Department/XLoadDepartment",
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-    }).done(function (data) {
-        $('#Department').dataTable({
-            "data": data,
-            "columns": [
-                //{ "data": "Id" },
-                { "data": "Name" },
-                {
-                    "data": "CreateDate", "render": function (data) {
-                        return moment(data).format('DD/MM/YYYY');
-                    }
-                },
-                {
-                    "data": "UpdateDate", "render": function (data) {
-                        var text = "Not Update Yet";
-                        var nulldate = "";
-                        if (data == nulldate) {
-                            return text();
-                        } else {
-                            return moment(data).format('DD/MM/YYYY');
-                        }
-                    }
-                },
-                {
-                    data: null, orderable: false, render: function (data, type, row) {
-                        return '<button type="button" class="btn btn-warning" id="BtnEdit" data-toggle="tooltip" data-placement="top" title="Edit" onclick="return GetById(' + row.Id + ')"><i class="mdi mdi-pencil"></i></button> &nbsp; <button type="button" class="btn btn-danger" id="BtnDelete" data-toggle="tooltip" data-placement="top" title="Hapus" onclick="return Delete(' + row.Id + ')"><i class="mdi mdi-delete"></i></button>';
+﻿$(document).ready(function () {
+    table = $('#Department').dataTable({
+        "ajax": {
+            url: "/Department/XLoadDepartment",
+            type: "GET",
+            dataType: "json",
+            dataSrc: "",
+        },
+        "columnDefs": [
+            { "orderable": false, "targets": 3 },
+            { "searchable": false, "targets": 3 }
+        ],
+        "columns": [
+            { "data": "Name" },
+            {
+                "data": "CreateDate", "render": function (data) {
+                    return moment(data).format('DD/MM/YYYY, h:mm a');
+                }
+            },
+            {
+                "data": "UpdateDate", "render": function (data) {
+                    var dateupdate = "Not Updated Yet";
+                    var nulldate = null;
+                    if (data == nulldate) {
+                        return dateupdate;
+                    } else {
+                        return moment(data).format('DD/MM/YYYY, h:mm a');
                     }
                 }
-            ]
-        })
+            },
+            {
+                data: null, render: function (data, type, row) {
+                    return " <td><button type='button' class='btn btn-warning' id='BtnEdit' onclick=GetById('" + row.Id + "');>Edit</button> <button type='button' class='btn btn-danger' id='BtnDelete' onclick=Delete('" + row.Id + "');>Delete</button ></td >";
+                }
+            },
+        ]
     });
-}
-
-
-//function loadDepartment() {
-//    $.ajax({
-//        url: "/Department/XLoadDepartment",
-//        type: "GET",
-//        contentType: "application/json;charset=utf-8",
-//        dataType: "json",
-//        success: function (result) {
-//            var html = '';
-//            $.each(result, function (key, Department) {
-//                html += '<tr>';
-//                html += '<td>' + Department.Name + '</td>';
-//                html += '<td>' + moment(Department.CreateDate).format('DD-MM-YYYY') + '</td>';
-//                html += '<td>' + moment(Department.UpdateDate).format('DD-MM-YYYY') + '</td>';
-//                html += '<td><button type="button" class="btn btn-warning" id="Update" onclick="return GetById(' + Department.Id + ')">Edit </button>';
-//                html += '<button type="button" class="btn btn-danger" id="Delete" onclick="return Delete(' + Department.Id + ')">Delete </button></td>';
-//                html += '</tr>';
-//            });
-//            $('.departmentbody').html(html);
-//        },
-//        error: function (errormessage) {
-//            alert(errormessage.responseText)
-//        }
-//    });
-//}
+}); 
+document.getElementById("btnaddDept").addEventListener("click", function () {
+    $('#Id').val('');
+    $('#Name').val('');
+    $('#SaveBtn').show();
+    $('#UpdateBtn').hide();
+});
 
 function Save() {
+    $.fn.dataTable.ext.errMode = 'none';
+    var table = $('#Department').DataTable({
+        "ajax": {
+            url: "/Department/XLoadDepartment"
+        }
+    });
     var Department = new Object();
     Department.Name = $('#Name').val();
     if ($('#Name').val() == "") {
@@ -90,31 +62,29 @@ function Save() {
     } else {
         $.ajax({
             type: 'POST',
-            url: '/Department/Insert/',
-            data: Department
+            url: '/Department/Insert',
+            data: Department,
         }).then((result) => {
             if (result.StatusCode == 200) {
                 Swal.fire({
                     icon: 'success',
-                    position: 'center',
-                    title: 'Saved Successfully',
-                    showConfirmButton: false,
-                    timer: 2000
+                    potition: 'center',
+                    title: 'Department Add Successfully',
+                    timer: 2500
                 }).then(function () {
-                    location.reload();
-                    ClearScreen();
+                    table.ajax.reload();
+                    $('#myModal').modal('hide');
+                    $('#Id').val('');
+                    $('#Name').val('');
                 });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to Insert',
-                })
-                ClearScreen();
+            }
+            else {
+                Swal.fire('Error', 'Failed to Input', 'error');
             }
         })
     }
 }
+
 
 function GetById(Id) {
     $.ajax({
@@ -138,6 +108,12 @@ function GetById(Id) {
 }
 
 function Edit() {
+    $.fn.dataTable.ext.errMode = 'none';
+    var table = $('#Department').DataTable({
+        "ajax": {
+            url: "/Department/XLoadDepartment"
+        }
+    });
     var Department = new Object();
     Department.Id = $('#Id').val();
     Department.Name = $('#Name').val();
@@ -148,23 +124,29 @@ function Edit() {
     }).then((result) => {
         if (result.StatusCode == 200) {
             Swal.fire({
-                icon: 'Success',
-                position: 'Center',
+                icon: 'success',
+                potition: 'center',
                 title: 'Department Update Successfully',
-                timer: 2000
+                timer: 2500
             }).then(function () {
-                location.reload();
-                ClearScreen();
+                table.ajax.reload();
+                $('#myModal').modal('hide');
+                $('#Id').val('');
+                $('#Name').val('');
             });
+        } else {
+            Swal.fire('Error', 'Failed to Edit', 'error');
         }
-        else {
-            Swal.fire('Error', 'Failed To Input', 'Error');
-            ClearScreen();
-        }
-     })
+    })
 }
 
 function Delete(Id) {
+    $.fn.dataTable.ext.errMode = 'none';
+    var table = $('#Department').DataTable({
+        "ajax": {
+            url: "/Department/XLoadDepartment"
+        }
+    });
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -183,8 +165,10 @@ function Delete(Id) {
                         title: 'Delete Successfully',
                         timer: 2000
                     }).then(function () {
-                        location.reload();
-                        ClearScreen();
+                        table.ajax.reload();
+                        $('#myModal').modal('hide');
+                        $('#Id').val('');
+                        $('#Name').val('');
                     });
                 }
                 else {
@@ -199,8 +183,3 @@ function Delete(Id) {
         }
     });
 }
-
-
-
-
-

@@ -31,9 +31,9 @@ namespace BelajarAPI.Controllers
         }
         public IHttpActionResult Post(DepartmentModels department)
         {
-            if (department.Name =="")
+            if (department.Name == "")
             {
-                return Content(HttpStatusCode.NotFound, "Failed To Add");                
+                return Content(HttpStatusCode.NotFound, "Failed To Add");
             }
             departments.Create(department);
             return Ok("Department Add Successfully");

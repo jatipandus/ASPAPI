@@ -1,4 +1,5 @@
 ﻿using BelajarAPI.Models;
+using BelajarAPI.Repository.Interface;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Web;
 
 namespace BelajarAPI.Repository
 {
-    public class DepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         DynamicParameters parameters = new DynamicParameters();
         SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString);
