@@ -89,3 +89,5 @@ C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\Bel
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\obj\Debug\BelajarAPI.csproj.CopyComplete
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\obj\Debug\BelajarAPI.dll
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\obj\Debug\BelajarAPI.pdb
+C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\bin\itextsharp.dll
+C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\bin\itextsharp.xml

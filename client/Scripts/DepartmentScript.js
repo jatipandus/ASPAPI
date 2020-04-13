@@ -35,7 +35,7 @@
             },
         ]
     });
-}); 
+}); //load
 document.getElementById("btnaddDept").addEventListener("click", function () {
     $('#Id').val('');
     $('#Name').val('');

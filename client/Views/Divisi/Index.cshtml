@@ -41,9 +41,12 @@
     </div>
 </div>
 <div class="table-responsive m-t-40">
+    <a href="@Url.Action("DivisiExcel","Divisi")" class="btn btn-primary"><span>Excel</span></a>
+    <a href="@Url.Action("DivisiCSV","Divisi")" class="btn btn-primary"><span>CSV</span></a>
+    <a href="@Url.Action("DivisiReport","Divisi")" class="btn btn-primary"><span>PDF</span></a>
     <table id="Divisi" class="table table-bordered table-striped">
         <thead>
-            <tr>
+            <tr class="tr_header">
                 <th>Name Division</th>
                 <th>Name Department</th>
                 <th>CreateDate</th>
@@ -51,9 +54,9 @@
                 <th>Action</th>
             </tr>
         </thead>
-        @*<tbody class="divisibody" />*@
     </table>
 </div>
 @section scripts{
     <script src="~/Scripts/DivisiScript.js"></script>
+
 }
