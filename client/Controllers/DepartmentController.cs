@@ -10,8 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using client.Models;
 using BelajarAPI.Models;
+using client.Report;
 
 namespace client.Controllers
 {
@@ -90,12 +90,12 @@ namespace client.Controllers
             return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public async Task<ActionResult> Excel()
+        public async Task<ActionResult> DepartmentExcel()
         {
             var columnHeaders = new string[]
             {
-                "Name",
-                "Tanggal Ditambahkan"
+                "Department Name",
+                "Create Date"
             };
 
             byte[] result;
@@ -114,7 +114,7 @@ namespace client.Controllers
                 }
 
                 var j = 2;
-                HttpResponseMessage response = await client.GetAsync("department");
+                HttpResponseMessage response = await client.GetAsync("Department");
                 if (response.IsSuccessStatusCode)
                 {
                     var readTask = await response.Content.ReadAsAsync<IList<DepartmentModels>>();
@@ -130,15 +130,15 @@ namespace client.Controllers
             return File(result, "application/ms-excel", $"Department.xlsx");
         }
 
-        public async Task<ActionResult> CSV()
+        public async Task<ActionResult> DepartmentCSV()
         {
             var columnHeaders = new string[]
             {
-                "Nama Department",
-                "Tanggal Ditambahkan"
+                "Department Name",
+                "Create Date"
             };
 
-            HttpResponseMessage response = await client.GetAsync("department");
+            HttpResponseMessage response = await client.GetAsync("Department");
 
             var readTask = await response.Content.ReadAsAsync<IList<DepartmentModels>>();
             var departmentRecords = from department in readTask
@@ -157,17 +157,17 @@ namespace client.Controllers
             return File(buffer, "text/csv", $"Department.csv");
         }
 
-        public ActionResult Report(DepartmentModels department)
+        public ActionResult DepartmentPDF(DepartmentModels department)
         {
-            ReportDepartment deptreport = new ReportDepartment();
-            byte[] abytes = deptreport.PrepareReport(exportToPdf());
+            ReportDepartment departmentreport = new ReportDepartment();
+            byte[] abytes = departmentreport.PrepareReport(exportToPdf());
             return File(abytes, "application/pdf");
         }
 
         public List<DepartmentModels> exportToPdf()
         {
             IEnumerable<DepartmentModels> models = null;
-            var responsTask = client.GetAsync("dept");
+            var responsTask = client.GetAsync("Department");
             responsTask.Wait();
             var result = responsTask.Result;
             if (result.IsSuccessStatusCode)

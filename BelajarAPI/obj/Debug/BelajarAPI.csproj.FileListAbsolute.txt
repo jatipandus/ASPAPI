@@ -81,7 +81,6 @@ C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\Bel
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\bin\System.Web.WebPages.Razor.xml
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\bin\Antlr3.Runtime.pdb
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\obj\Debug\BelajarAPI.csprojAssemblyReference.cache
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\obj\Debug\BelajarAPI.Migrations.adddepartment.resources
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\obj\Debug\BelajarAPI.Migrations.adddivisi.resources
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\BelajarAPI\obj\Debug\BelajarAPI.csproj.GenerateResource.cache

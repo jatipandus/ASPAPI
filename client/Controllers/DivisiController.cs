@@ -12,7 +12,7 @@ using BelajarAPI.Context;
 using OfficeOpenXml;
 using System.Text;
 using Microsoft.Ajax.Utilities;
-using client.Models;
+using client.Report;
 
 namespace client.Controllers
 {
@@ -93,16 +93,16 @@ namespace client.Controllers
         {
             var columnHeaders = new string[]
             {
-                "Name",
+                "Division Name",
                 "Department Name",
-                "Ditambahkan"
+                "Create Date"
             };
 
             byte[] result;
 
             using (var package = new ExcelPackage())
             {
-                var worksheet = package.Workbook.Worksheets.Add("Division");
+                var worksheet = package.Workbook.Worksheets.Add("Divisi");
                 using (var cells = worksheet.Cells[1, 1, 1, 3])
                 {
                     cells.Style.Font.Bold = true;
@@ -114,7 +114,7 @@ namespace client.Controllers
                 }
 
                 var j = 2;
-                HttpResponseMessage response = await client.GetAsync("divisi");
+                HttpResponseMessage response = await client.GetAsync("Divisi");
                 if (response.IsSuccessStatusCode)
                 {
                     var readTask = await response.Content.ReadAsAsync<IList<DivisiViewModel>>();
@@ -128,44 +128,44 @@ namespace client.Controllers
                 }
                 result = package.GetAsByteArray();
             }
-            return File(result, "application/ms-excel", $"Division-{DateTime.Now.ToString("hh:mm:ss-MM/dd/yyyy")}.xlsx");
+            return File(result, "application/ms-excel", $"Divisi-{DateTime.Now.ToString("hh:mm:ss-MM/dd/yyyy")}.xlsx");
         }
 
         public async Task<ActionResult> DivisiCSV()
         {
             var columnHeaders = new string[]
             {
-                "Nama",
+                "Division Name",
                 "Department Name",
-                "Ditambahkan"
+                "Create Date"
             };
-            HttpResponseMessage response = await client.GetAsync("divisi");
+            HttpResponseMessage response = await client.GetAsync("Divisi");
             var readTask = await response.Content.ReadAsAsync<IList<DivisiViewModel>>();
-            var departmentRecords = from divisi in readTask
+            var divisiRecords = from divisi in readTask
                                     select new object[]{
                     $"{divisi.DivisiName}",
                     $"{divisi.DepartmentName}",
                     $"\"{divisi.CreateDate.ToString("MM/dd/yyyy")}\""
             }.ToList();
-            var departmentcsv = new StringBuilder();
-            departmentRecords.ForEach(line =>
+            var divisicsv = new StringBuilder();
+            divisiRecords.ForEach(line =>
             {
-                departmentcsv.AppendLine(string.Join(",", line));
+                divisicsv.AppendLine(string.Join(",", line));
             });
-            byte[] buffer = Encoding.ASCII.GetBytes($"{string.Join(",", columnHeaders)}\r\n{departmentcsv.ToString()}");
-            return File(buffer, "text/csv", $"Division-{DateTime.Now.ToString("hh:mm:ss-MM/dd/yyyy")}.csv");
+            byte[] buffer = Encoding.ASCII.GetBytes($"{string.Join(",", columnHeaders)}\r\n{divisicsv.ToString()}");
+            return File(buffer, "text/csv", $"Divisi-{DateTime.Now.ToString("hh:mm:ss-MM/dd/yyyy")}.csv");
         }
-        public ActionResult DivisiReport(DivisiViewModel department)
+        public ActionResult DivisiPDF(DivisiViewModel divisi)
         {
-            ReportDivisi deptreport = new ReportDivisi();
-            byte[] abytes = deptreport.PrepareReport(exportToPdf());
+            ReportDivisi divisipdf = new ReportDivisi();
+            byte[] abytes = divisipdf.PrepareReport(exportToPdf());
             return File(abytes, "application/pdf");
         }
 
         public List<DivisiViewModel> exportToPdf()
         {
             IEnumerable<DivisiViewModel> models = null;
-            var responsTask = client.GetAsync("divisi");
+            var responsTask = client.GetAsync("Divisi");
             responsTask.Wait();
             var result = responsTask.Result;
             if (result.IsSuccessStatusCode)
