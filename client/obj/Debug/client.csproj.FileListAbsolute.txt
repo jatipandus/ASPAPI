@@ -87,3 +87,7 @@ C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\cli
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\client\obj\Debug\client.csproj.CopyComplete
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\client\obj\Debug\client.dll
 C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\client\obj\Debug\client.pdb
+C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\client\bin\EPPlus.dll
+C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\client\bin\EPPlus.xml
+C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\client\bin\itextsharp.dll
+C:\Users\Jati Pandu Saputra\Documents\Visual Studio 2017\Projects\BelajarAPI\client\bin\itextsharp.xml

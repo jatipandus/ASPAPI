@@ -13,5 +13,7 @@ namespace BelajarAPI.Models
         public string DepartmentName { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public Nullable<DateTimeOffset> UpdateDate { get; set; }
+
+        public List<DepartmentModels> Department { get; set; }
     }
 }
